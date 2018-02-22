@@ -1,3 +1,4 @@
+import enums.Places;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
@@ -13,7 +14,7 @@ public class YandexMapsTest {
     public void simpleSpellerApiCall() {
         RestAssured
                 .given()
-                .queryParam(GEOCODE, PLACE)
+                .queryParam(GEOCODE, Places.Россия.coordinates)
                 .accept(ContentType.JSON)
                 .log().everything()
                 .when()
@@ -23,7 +24,7 @@ public class YandexMapsTest {
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK)
                 .body(Matchers.allOf(
-                        Matchers.containsString("Россия")))
+                        Matchers.containsString(Places.Россия.name())))
                 .time(lessThan(20000L)); // Milliseconds
     }
 
@@ -33,7 +34,7 @@ public class YandexMapsTest {
         //GET
         RestAssured
                 .given()
-                .param(GEOCODE, PLACE)
+                .param(GEOCODE, Places.Россия.coordinates)
                 .log().everything()
                 .get(YANDEX_MAPS_API_URI)
                 .prettyPeek();
@@ -42,7 +43,7 @@ public class YandexMapsTest {
         //POST
         RestAssured
                 .given()
-                .param(GEOCODE, PLACE)
+                .param(GEOCODE, Places.Россия.coordinates)
                 .log().everything()
                 .post(YANDEX_MAPS_API_URI)
                 .prettyPeek();
@@ -51,7 +52,7 @@ public class YandexMapsTest {
         //HEAD
         RestAssured
                 .given()
-                .param(GEOCODE, PLACE)
+                .param(GEOCODE, Places.Россия.coordinates)
                 .log().everything()
                 .head(YANDEX_MAPS_API_URI)
                 .prettyPeek();
@@ -60,7 +61,7 @@ public class YandexMapsTest {
         //OPTIONS
         RestAssured
                 .given()
-                .param(GEOCODE, PLACE)
+                .param(GEOCODE, Places.Россия.coordinates)
                 .log().everything()
                 .options(YANDEX_MAPS_API_URI)
                 .prettyPeek();
@@ -69,7 +70,7 @@ public class YandexMapsTest {
         //PUT
         RestAssured
                 .given()
-                .param(GEOCODE, PLACE)
+                .param(GEOCODE, Places.Россия.coordinates)
                 .log().everything()
                 .put(YANDEX_MAPS_API_URI)
                 .prettyPeek();
@@ -78,7 +79,7 @@ public class YandexMapsTest {
         //PATCH
         RestAssured
                 .given()
-                .param(GEOCODE, PLACE)
+                .param(GEOCODE, Places.Россия.coordinates)
                 .log()
                 .everything()
                 .patch(YANDEX_MAPS_API_URI)
@@ -88,7 +89,7 @@ public class YandexMapsTest {
         //DELETE
         RestAssured
                 .given()
-                .param(GEOCODE, PLACE)
+                .param(GEOCODE, Places.Россия.coordinates)
                 .log()
                 .everything()
                 .delete(YANDEX_MAPS_API_URI).prettyPeek()
@@ -97,4 +98,3 @@ public class YandexMapsTest {
                 .statusLine("HTTP/1.1 405 Not Allowed");
     }
 }
-
